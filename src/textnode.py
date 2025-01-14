@@ -9,8 +9,30 @@ class TextType(Enum):
     LINK = "link"
     IMAGE = "image"
 
+    # Headings
+    H1 = "#"
+    H2 = "##"
+    H3 = "###"
+    H4 = "####"
+    H5 = "#####"
+    H6 = "######"
+
+    STRONG = "strong"
+    EM = "em"
+    S = "s"
+    STRIKE = "strike"
+    DEL = "del"
+    BLOCKQUOTE = "blockquote"
+
+    def __str__(self):
+        return self.value
+
 
 class TextNode:
+    _text = ""
+    _url = None
+    _text_type = None
+
     def __init__(self,
                  text,
                  text_type,
@@ -28,9 +50,9 @@ class TextNode:
 
         :return: None
         """
-        self.text = text
-        self.url = url
-        self.text_type = self._enforece_type(text_type)
+        self._text = text
+        self._url = url
+        self._text_type = self._enforece_type(text_type)
 
     def __eq__(self, other):
         is_text = self.text == other.text
@@ -59,3 +81,16 @@ class TextNode:
 
         # return as TextType Enum
         return TextType[upper_text]
+
+    # setter for text_type
+    @property
+    def text_type(self):
+        return self._text_type
+
+    @property
+    def text(self):
+        return self._text
+
+    @property
+    def url(self):
+        return self._url

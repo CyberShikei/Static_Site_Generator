@@ -8,8 +8,11 @@
 #               the HTML element
 #     - props: a dictionary that represents the properties of the HTML element
 
+from .tags import HTMLTag, str_to_tag
 
 # HTMLNode class
+
+
 class HTMLNode():
     _tag: str
     _value: str
@@ -23,7 +26,7 @@ class HTMLNode():
                  children=[],
                  props={}
                  ):
-        self._tag = tag
+        self._tag = str_to_tag(tag)
         self._value = value
         self._children = children
         self._props = props
@@ -33,24 +36,24 @@ class HTMLNode():
 
     def props_to_html(self):
         result = ""
-        for key, value in self._props.items():
+        for key, value in self.props.items():
             result += f' {key}="{value}"'
 
         return result
 
     def __eq__(self, other):
-        is_tag = self._tag == other.tag
-        is_value = self._value == other.value
-        is_props = self._props == other.props
-        is_children = self._children == other.children
+        is_tag = self.tag == other.tag
+        is_value = self.value == other.value
+        is_props = self.props == other.props
+        is_children = self.children == other.children
 
         return is_tag and is_value and is_props and is_children
 
     def __repr__(self):
-        rep_tag = self._tag
-        rep_val = self._value
-        rep_props = self._props
-        rep_children = self._children
+        rep_tag = self.tag
+        rep_val = self.value
+        rep_props = self.props
+        rep_children = self.children
 
         rep_string = f"""HTMLNode(
         tag={rep_tag},
@@ -64,11 +67,11 @@ class HTMLNode():
     # setter and getter for tag
     @property
     def tag(self):
-        return self._tag
+        return self._tag.value.lower()
 
     @tag.setter
     def tag(self, value):
-        self._tag = value
+        self._tag = str_to_tag(value)
 
     # setter and getter for value
     @property
