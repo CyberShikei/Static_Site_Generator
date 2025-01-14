@@ -18,12 +18,12 @@ class TestTextNode(unittest.TestCase):
 
     def test_repr(self):
         node = TextNode("This is a text node", TextType.BOLD)
-        t_str = "TextNode(This is a text node, bold, None)"
+        t_str = "TextNode(This is a text node, TextType.BOLD, None)"
 
         self.assertEqual(repr(node), t_str)
 
     def test_enforce_type(self):
-        node = TextNode("This is a text node", "bold")
+        node = TextNode("This is a text node", TextType.BOLD)
 
         self.assertEqual(node.text_type, TextType.BOLD)
 

@@ -2,20 +2,20 @@ from enum import Enum
 
 
 class TextType(Enum):
-    NORMAL = "normal"
-    BOLD = "bold"
-    ITALIC = "italic"
+    NORMAL = ""
+    BOLD = "b"
+    ITALIC = "i"
     CODE = "code"
-    LINK = "link"
-    IMAGE = "image"
+    LINK = "a"
+    IMAGE = "img"
 
     # Headings
-    H1 = "#"
-    H2 = "##"
-    H3 = "###"
-    H4 = "####"
-    H5 = "#####"
-    H6 = "######"
+    H1 = "h1"
+    H2 = "h2"
+    H3 = "h3"
+    H4 = "h4"
+    H5 = "h5"
+    H6 = "h6"
 
     STRONG = "strong"
     EM = "em"
@@ -23,9 +23,6 @@ class TextType(Enum):
     STRIKE = "strike"
     DEL = "del"
     BLOCKQUOTE = "blockquote"
-
-    def __str__(self):
-        return self.value
 
 
 class TextNode:
@@ -63,7 +60,7 @@ class TextNode:
 
     def __repr__(self):
         s_txt = self.text
-        s_typ = self.text_type.value
+        s_typ = self.text_type
         s_url = self.url
         s_text = f"TextNode({s_txt}, {s_typ}, {s_url})"
 
@@ -73,7 +70,7 @@ class TextNode:
         if isinstance(text_type, TextType):
             return text_type
 
-        upper_text = text_type.upper()
+        upper_text = text_type
         # check if text_type is valid string for TextType Enum
         if upper_text not in TextType.__members__:
             raise ValueError(f"""Invalid text type: {text_type}

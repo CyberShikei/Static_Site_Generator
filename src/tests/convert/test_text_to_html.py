@@ -1,39 +1,88 @@
 import unittest
 
-from src.convert.text_to_html import text_to_html, text_type_to_html_tag
+from src.convert.text_to_html import text_to_html
 from src.textnode import TextNode, TextType
 from src.html.node import HTMLNode
 
 
 class TestTextToHtml(unittest.TestCase):
-    def test_text_to_html(self):
-        txt_test_type = TextType.IMAGE
-        txt_test_text = "Test Text"
-        txt_test_url = "http://test.com"
+    def test_text_to_html_no_tag(self):
+        TEXT = "Hello, World!"
+        TEXT_TYPE = TextType.NORMAL
+        URL = "https://www.google.com"
 
-        txt_node = TextNode(txt_test_text, txt_test_type, txt_test_url)
+        node_args = (TEXT, TEXT_TYPE, URL)
+        text_node = TextNode(*node_args)
 
-        html_tag = 'IMG'
-        html_value = txt_test_text
-        html_children = []
-        html_props = {}
+        html_node = text_to_html(text_node)
 
-        expected = HTMLNode(tag=html_tag, value=html_value,
-                            children=html_children, props=html_props)
+        self.assertEqual(html_node.tag, "")
+        self.assertEqual(html_node.value, TEXT)
 
-        result = text_to_html(txt_node)
+    def test_text_to_html_bold(self):
+        TEXT = "Hello, World!"
+        TEXT_TYPE = TextType.BOLD
+        URL = "https://www.google.com"
 
-        self.assertEqual(result, expected)
+        node_args = (TEXT, TEXT_TYPE, URL)
+        text_node = TextNode(*node_args)
 
-    def test_text_type_to_html_tag(self):
-        txt_test_type = TextType.IMAGE
+        html_node = text_to_html(text_node)
 
-        result = text_type_to_html_tag(txt_test_type).value
+        self.assertEqual(html_node.tag, "b")
+        self.assertEqual(html_node.value, TEXT)
 
-        self.assertEqual(result, 'IMG')
+    def test_text_to_html_italic(self):
+        TEXT = "Hello, World!"
+        TEXT_TYPE = TextType.ITALIC
+        URL = "https://www.google.com"
 
-    def test_text_type_to_html_tag_invalid(self):
-        txt_test_type = 'invalid'
+        node_args = (TEXT, TEXT_TYPE, URL)
+        text_node = TextNode(*node_args)
 
-        with self.assertRaises(ValueError):
-            text_type_to_html_tag(txt_test_type)
+        html_node = text_to_html(text_node)
+
+        self.assertEqual(html_node.tag, "i")
+        self.assertEqual(html_node.value, TEXT)
+
+    def test_text_to_html_code(self):
+        TEXT = "Hello, World!"
+        TEXT_TYPE = TextType.CODE
+        URL = "https://www.google.com"
+
+        node_args = (TEXT, TEXT_TYPE, URL)
+        text_node = TextNode(*node_args)
+
+        html_node = text_to_html(text_node)
+
+        self.assertEqual(html_node.tag, "code")
+        self.assertEqual(html_node.value, TEXT)
+
+    def test_text_to_html_link(self):
+        TEXT = "Hello, World!"
+        TEXT_TYPE = TextType.LINK
+        URL = "https://www.google.com"
+
+        node_args = (TEXT, TEXT_TYPE, URL)
+        text_node = TextNode(*node_args)
+
+        html_node = text_to_html(text_node)
+
+        self.assertEqual(html_node.tag, "a")
+        self.assertEqual(html_node.value, TEXT)
+        self.assertEqual(html_node.props["href"], URL)
+
+    def test_text_to_html_image(self):
+        TEXT = "Hello, World!"
+        TEXT_TYPE = TextType.IMAGE
+        URL = "https://www.google.com"
+
+        node_args = (TEXT, TEXT_TYPE, URL)
+        text_node = TextNode(*node_args)
+
+        html_node = text_to_html(text_node)
+
+        self.assertEqual(html_node.tag, "img")
+        self.assertEqual(html_node.value, "")
+        self.assertEqual(html_node.props["src"], URL)
+        self.assertEqual(html_node.props["alt"], TEXT)

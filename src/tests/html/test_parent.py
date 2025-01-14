@@ -9,10 +9,9 @@ class TestParentNode(unittest.TestCase):
 
     def test_init(self):
         # Arrange
-        tag = "div"
+        tag = "h2"
         children = [ParentNode(tag="p",
-                               children=[LeafNode("span",
-                                                  "This is a span")],
+                               children=[],
                                props={})]
         props = {"id": "main"}
 
@@ -28,10 +27,10 @@ class TestParentNode(unittest.TestCase):
 
     def test_to_html(self):
         # Arrange
-        tag = "div"
-        leaf_children = [LeafNode("span", "This is a span"),
-                         LeafNode("span", "This is another span"),
-                         LeafNode("span", "This is a third span")]
+        tag = "h1"
+        leaf_children = [LeafNode("i", "This is a span"),
+                         LeafNode("code", "This is another span"),
+                         LeafNode("b", "This is a third span")]
         children = [ParentNode(tag="p", children=leaf_children, props={})]
         props = {"id": "main"}
 
@@ -43,7 +42,7 @@ class TestParentNode(unittest.TestCase):
 
         lefs = [leaf.to_html() for leaf in leaf_children]
 
-        equals = f'<div id="main"><p>{lefs[0]}{lefs[1]}{lefs[2]}</p></div>'
+        equals = f'<h1 id="main"><p>{lefs[0]}{lefs[1]}{lefs[2]}</p></h1>'
 
         # Assert
         self.assertEqual(result, equals)
@@ -51,7 +50,7 @@ class TestParentNode(unittest.TestCase):
     def test_to_html_no_tag(self):
         # Arrange
         tag = ""
-        leaf = LeafNode("span", "This is a span")
+        leaf = LeafNode("a", "This is a span")
         children = [ParentNode(tag="p", children=[leaf], props={})]
         props = {"id": "main"}
 
@@ -64,7 +63,7 @@ class TestParentNode(unittest.TestCase):
 
     def test_to_html_no_children(self):
         # Arrange
-        tag = "div"
+        tag = "h5"
 
         children = []
         props = {"id": "main"}
@@ -78,10 +77,9 @@ class TestParentNode(unittest.TestCase):
 
     def test_eq(self):
         # Arrange
-        tag = "div"
+        tag = "h4"
         children = [ParentNode(tag="p",
-                               children=[LeafNode("span",
-                                                  "This is a span")],
+                               children=[],
                                props={})]
         props = {"id": "main"}
 
@@ -96,10 +94,9 @@ class TestParentNode(unittest.TestCase):
 
     def test_eq_false(self):
         # Arrange
-        tag = "div"
+        tag = "h3"
         children = [ParentNode(tag="p",
-                               children=[LeafNode("span",
-                                                  "This is a span")],
+                               children=[],
                                props={})]
         props = {"id": "main"}
 
@@ -107,17 +104,16 @@ class TestParentNode(unittest.TestCase):
 
         # Act
         node = ParentNode(*targs)
-        node2 = ParentNode("div", [], {})
+        node2 = ParentNode("h4", children, props)
 
         # Assert
         self.assertNotEqual(node, node2)
 
     def test_repr(self):
         # Arrange
-        tag = "div"
+        tag = "h1"
         children = [ParentNode(tag="p",
-                               children=[LeafNode("span",
-                                                  "This is a span")],
+                               children=[],
                                props={})]
         props = {"id": "main"}
 

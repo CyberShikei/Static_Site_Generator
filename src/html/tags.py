@@ -9,46 +9,32 @@ class HTMLTag(Enum):
     # https://www.w3schools.com/tags/
 
     # Headings
-    H1 = "H1"
-    H2 = "H2"
-    H3 = "H3"
-    H4 = "H4"
-    H5 = "H5"
-    H6 = "H6"
+    H1 = "h1"
+    H2 = "h2"
+    H3 = "h3"
+    H4 = "h4"
+    H5 = "h5"
+    H6 = "h6"
 
     # Paragraph
-    P = "P"
+    P = "p"
 
     # Bold
-    B = "B"
-    STRONG = "STRONG"
+    B = "b"
 
     # Italic
-    I = "I"
-    EM = "EM"
-
-    # Strikethrough
-    S = "S"
-    STRIKE = "STRIKE"
-    DEL = "DEL"
-
-    # Blockquote
-    BLOCKQUOTE = "BLOCKQUOTE"
+    ITALIC = "i"
 
     # Code
-    CODE = "CODE"
+    CODE = "code"
 
     # Link
-    A = "A"
+    A = "a"
 
     # Image
-    IMG = "IMG"
+    IMG = "img"
 
-    # span
-    SPAN = "SPAN"
-
-    # div
-    DIV = "DIV"
+    NORMAL = ""
 
     def __str__(self):
         return self.value
@@ -70,11 +56,15 @@ def str_to_tag(tag):
     # if tag == "":
     #     return tag
 
-    upper_tag = tag.upper()
-    # check if tag is valid string for HTMLTag Enum
-    if upper_tag not in HTMLTag.__members__:
-        raise ValueError(f"""Invalid tag: {tag}
-        Valid tags are: {HTMLTag.__members__.keys()}""")
+    upper_tag = tag
+    # check if tag is valid string in HTMLTag Enum values
+    if not is_in_enum(tag, HTMLTag):
+        valid_tags = [e.value for e in HTMLTag]
+        raise ValueError(f"""Invalid HTML tag: {tag}
+        Valid tags: {valid_tags}""")
 
-    # return as HTMLTag Enum
     return HTMLTag(upper_tag)
+
+
+def is_in_enum(value, enum):
+    return value in [e.value for e in enum]

@@ -67,7 +67,7 @@ class HTMLNode():
     # setter and getter for tag
     @property
     def tag(self):
-        return self._tag.value.lower()
+        return self._tag.value
 
     @tag.setter
     def tag(self, value):
