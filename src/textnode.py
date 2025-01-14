@@ -48,6 +48,9 @@ class TextNode:
         return s_text
 
     def _enforece_type(self, text_type):
+        if isinstance(text_type, TextType):
+            return text_type
+
         upper_text = text_type.upper()
         # check if text_type is valid string for TextType Enum
         if upper_text not in TextType.__members__:
