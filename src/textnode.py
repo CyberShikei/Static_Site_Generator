@@ -17,12 +17,31 @@ class TextType(Enum):
     H5 = "h5"
     H6 = "h6"
 
-    STRONG = "strong"
-    EM = "em"
-    S = "s"
-    STRIKE = "strike"
-    DEL = "del"
-    BLOCKQUOTE = "blockquote"
+    def get_md_delimiter(self):
+        if self == TextType.NORMAL:
+            return ""
+        if self == TextType.BOLD:
+            return "**"
+        if self == TextType.ITALIC:
+            return "*"
+        if self == TextType.CODE:
+            return "`"
+        if self == TextType.LINK:
+            return "["
+        if self == TextType.IMAGE:
+            return "!"
+        if self == TextType.H1:
+            return "#"
+        if self == TextType.H2:
+            return "##"
+        if self == TextType.H3:
+            return "###"
+        if self == TextType.H4:
+            return "####"
+        if self == TextType.H5:
+            return "#####"
+        if self == TextType.H6:
+            return "######"
 
 
 class TextNode:
