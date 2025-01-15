@@ -3,6 +3,7 @@ from enum import Enum
 
 class TextType(Enum):
     NORMAL = ""
+    TEXT = NORMAL
     BOLD = "b"
     ITALIC = "i"
     CODE = "code"
@@ -18,7 +19,7 @@ class TextType(Enum):
     H6 = "h6"
 
     def get_md_delimiter(self):
-        if self == TextType.NORMAL:
+        if self == TextType.NORMAL or self == TextType.TEXT:
             return ""
         if self == TextType.BOLD:
             return "**"
@@ -42,6 +43,32 @@ class TextType(Enum):
             return "#####"
         if self == TextType.H6:
             return "######"
+
+    def get_type_from_delimiter(delimiter):
+        if delimiter == "":
+            return TextType.NORMAL
+        if delimiter == "**":
+            return TextType.BOLD
+        if delimiter == "*":
+            return TextType.ITALIC
+        if delimiter == "`":
+            return TextType.CODE
+        if delimiter == "[":
+            return TextType.LINK
+        if delimiter == "!":
+            return TextType.IMAGE
+        if delimiter == "#":
+            return TextType.H1
+        if delimiter == "##":
+            return TextType.H2
+        if delimiter == "###":
+            return TextType.H3
+        if delimiter == "####":
+            return TextType.H4
+        if delimiter == "#####":
+            return TextType.H5
+        if delimiter == "######":
+            return TextType.H6
 
 
 class TextNode:

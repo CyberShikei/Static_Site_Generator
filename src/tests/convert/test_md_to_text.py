@@ -5,16 +5,34 @@ from src.textnode import TextType, TextNode
 
 
 class TestMdToText(unittest.TestCase):
+    # Examples:
+    #
+    #       This is text with a **bolded phrase** in the middle
+
+    # the text above should become the following:
+    #
+    #       [
+    #           TextNode("This is text with a ", TextType.TEXT),
+    #           TextNode("bolded phrase", TextType.BOLD),
+    #           TextNode(" in the middle", TextType.TEXT),
+    #       ]
+
     def test_split_nodes_delimiter(self):
-        nodes = [TextNode("Hello", TextType.NORMAL),
-                 TextNode("world", TextType.BOLD)]
-
-        delimiter = "**"
-
-        text_type = TextType.BOLD
-
-        expected = [TextNode("Hello", TextType.NORMAL), TextNode(
-            "", text_type), TextNode("world", TextType.BOLD)]
-
-        self.assertEqual(split_nodes_delimiter(
-            nodes, delimiter, text_type), expected)
+        nodes = [
+            TextNode("This is text with a ", TextType.TEXT),
+            TextNode("**", TextType.BOLD),
+            TextNode("bolded phrase", TextType.TEXT),
+            TextNode("**", TextType.BOLD),
+            TextNode(" in the middle", TextType.TEXT),
+        ]
+        new_nodes = split_nodes_delimiter(nodes, "**", TextType.BOLD)
+        self.assertEqual(
+            new_nodes,
+            [
+                TextNode("This is text with a ", TextType.TEXT),
+                TextNode("", TextType.BOLD),
+                TextNode("bolded phrase", TextType.TEXT),
+                TextNode("", TextType.BOLD),
+                TextNode(" in the middle", TextType.TEXT),
+            ],
+        )
