@@ -37,3 +37,55 @@ class TestMdToText(unittest.TestCase):
                 TextNode(" in the middle", TextType.TEXT),
             ],
         )
+
+    def test_split_nodes_delimiter_no_delimiter(self):
+        nodes = [
+            TextNode("This is text with a ", TextType.TEXT),
+            TextNode("bolded phrase", TextType.TEXT),
+            TextNode(" in the middle", TextType.TEXT),
+        ]
+        new_nodes = split_nodes_delimiter(nodes, "**", TextType.BOLD)
+        self.assertEqual(
+            new_nodes,
+            [
+                TextNode("This is text with a ", TextType.TEXT),
+                TextNode("bolded phrase", TextType.TEXT),
+                TextNode(" in the middle", TextType.TEXT),
+            ],
+        )
+
+    def test_split_nodes_delimiter_no_delimiter_at_end(self):
+        nodes = [
+            TextNode("This is text with a ", TextType.TEXT),
+            TextNode("bolded phrase", TextType.TEXT),
+            TextNode("**", TextType.BOLD),
+        ]
+        new_nodes = split_nodes_delimiter(nodes, "**", TextType.BOLD)
+        self.assertEqual(
+            new_nodes,
+            [
+                TextNode("This is text with a ", TextType.TEXT),
+                TextNode("bolded phrase", TextType.TEXT),
+                TextNode("", TextType.BOLD),
+            ],
+        )
+
+    def test_split_nodes_delimiter_no_delimiter_at_start(self):
+        nodes = [
+            TextNode("**", TextType.BOLD),
+            TextNode("bolded phrase", TextType.TEXT),
+            TextNode(" in the middle", TextType.TEXT),
+        ]
+        new_nodes = split_nodes_delimiter(nodes, "**", TextType.BOLD)
+        self.assertEqual(
+            new_nodes,
+            [
+                TextNode("", TextType.BOLD),
+                TextNode("bolded phrase", TextType.TEXT),
+                TextNode(" in the middle", TextType.TEXT),
+            ],
+        )
+
+
+def main():
+    unittest.main()
