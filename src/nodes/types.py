@@ -38,7 +38,7 @@ def to_text_type(md_in):
 
     if isinstance(md_type, str):
         md_type = _type_str_to_md(md_type)
-    elif not isinstance(md_type, MDType):
+    if not isinstance(md_type, MDType):
         raise ValueError("Invalid type")
 
     return _match_md(md_type)
@@ -49,7 +49,7 @@ def to_md_type(text_in):
 
     if isinstance(text_type, str):
         text_type = _type_str_to_text(text_type)
-    elif not isinstance(text_type, TextType):
+    if not isinstance(text_type, TextType):
         raise ValueError("Invalid type")
 
     return _match_text(text_type)
@@ -120,16 +120,60 @@ def _match_text(text_type):
 
 
 def _type_str_to_text(string):
-    for text_type in TextType:
-        if text_type.value == string:
-            return text_type
-
-    return None
+    match (string):
+        case "":
+            return TextType.NORMAL
+        case "**":
+            return TextType.BOLD
+        case "*":
+            return TextType.ITALIC
+        case "`":
+            return TextType.CODE
+        case "[":
+            return TextType.LINK
+        case "!":
+            return TextType.IMAGE
+        case "#":
+            return TextType.H1
+        case "##":
+            return TextType.H2
+        case "###":
+            return TextType.H3
+        case "####":
+            return TextType.H4
+        case "#####":
+            return TextType.H5
+        case "######":
+            return TextType.H6
+        case _:
+            return None
 
 
 def _type_str_to_md(string):
-    for md_type in MDType:
-        if md_type.value == string:
-            return md_type
-
-    return None
+    match (string):
+        case "":
+            return MDType.NORMAL
+        case "**":
+            return MDType.BOLD
+        case "*":
+            return MDType.ITALIC
+        case "`":
+            return MDType.CODE
+        case "[":
+            return MDType.LINK
+        case "!":
+            return MDType.IMAGE
+        case "#":
+            return MDType.H1
+        case "##":
+            return MDType.H2
+        case "###":
+            return MDType.H3
+        case "####":
+            return MDType.H4
+        case "#####":
+            return MDType.H5
+        case "######":
+            return MDType.H6
+        case _:
+            return None

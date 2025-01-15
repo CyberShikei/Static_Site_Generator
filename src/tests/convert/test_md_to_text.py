@@ -19,72 +19,67 @@ class TestMdToText(unittest.TestCase):
     #       ]
 
     def test_split_nodes_delimiter(self):
-        nodes = [
-            TextNode("This is text with a ", TextType.TEXT),
-            TextNode("**", TextType.BOLD),
-            TextNode("bolded phrase", TextType.TEXT),
-            TextNode("**", TextType.BOLD),
-            TextNode(" in the middle", TextType.TEXT),
+        old_nodes = [
+            TextNode("This is text with a ", TextType.NORMAL),
+            TextNode("**bolded phrase**", TextType.NORMAL),
+            TextNode(" in the middle", TextType.NORMAL),
         ]
-        new_nodes = split_nodes_delimiter(nodes, "**", TextType.BOLD)
-        self.assertEqual(
-            new_nodes,
-            [
-                TextNode("This is text with a ", TextType.TEXT),
-                TextNode("", TextType.BOLD),
-                TextNode("bolded phrase", TextType.TEXT),
-                TextNode("", TextType.BOLD),
-                TextNode(" in the middle", TextType.TEXT),
-            ],
-        )
 
-    def test_split_nodes_delimiter_no_delimiter(self):
-        nodes = [
-            TextNode("This is text with a ", TextType.TEXT),
-            TextNode("bolded phrase", TextType.TEXT),
-            TextNode(" in the middle", TextType.TEXT),
-        ]
-        new_nodes = split_nodes_delimiter(nodes, "**", TextType.BOLD)
-        self.assertEqual(
-            new_nodes,
-            [
-                TextNode("This is text with a ", TextType.TEXT),
-                TextNode("bolded phrase", TextType.TEXT),
-                TextNode(" in the middle", TextType.TEXT),
-            ],
-        )
+        new_nodes = split_nodes_delimiter(old_nodes, "**")
 
-    def test_split_nodes_delimiter_no_delimiter_at_end(self):
-        nodes = [
-            TextNode("This is text with a ", TextType.TEXT),
-            TextNode("bolded phrase", TextType.TEXT),
-            TextNode("**", TextType.BOLD),
+        expected_out = [
+            TextNode("This is text with a ", TextType.NORMAL),
+            TextNode("bolded phrase", TextType.BOLD),
+            TextNode(" in the middle", TextType.NORMAL),
         ]
-        new_nodes = split_nodes_delimiter(nodes, "**", TextType.BOLD)
-        self.assertEqual(
-            new_nodes,
-            [
-                TextNode("This is text with a ", TextType.TEXT),
-                TextNode("bolded phrase", TextType.TEXT),
-                TextNode("", TextType.BOLD),
-            ],
-        )
 
-    def test_split_nodes_delimiter_no_delimiter_at_start(self):
-        nodes = [
-            TextNode("**", TextType.BOLD),
-            TextNode("bolded phrase", TextType.TEXT),
-            TextNode(" in the middle", TextType.TEXT),
+        err_msg = f"""Expected {expected_out},
+
+        but got {new_nodes}"""
+
+        self.assertEqual(new_nodes, expected_out, err_msg)
+
+    def test_split_nodes_italic(self):
+        old_nodes = [
+            TextNode("This is text with a ", TextType.NORMAL),
+            TextNode("*italic phrase*", TextType.NORMAL),
+            TextNode(" in the middle", TextType.NORMAL),
         ]
-        new_nodes = split_nodes_delimiter(nodes, "**", TextType.BOLD)
-        self.assertEqual(
-            new_nodes,
-            [
-                TextNode("", TextType.BOLD),
-                TextNode("bolded phrase", TextType.TEXT),
-                TextNode(" in the middle", TextType.TEXT),
-            ],
-        )
+
+        new_nodes = split_nodes_delimiter(old_nodes, "*")
+
+        expected_out = [
+            TextNode("This is text with a ", TextType.NORMAL),
+            TextNode("italic phrase", TextType.ITALIC),
+            TextNode(" in the middle", TextType.NORMAL),
+        ]
+
+        err_msg = f"""Expected {expected_out},
+
+        but got {new_nodes}"""
+
+        self.assertEqual(new_nodes, expected_out, err_msg)
+
+    def test_split_nodes_code(self):
+        old_nodes = [
+            TextNode("This is text with a ", TextType.NORMAL),
+            TextNode("`code phrase`", TextType.NORMAL),
+            TextNode(" in the middle", TextType.NORMAL),
+        ]
+
+        new_nodes = split_nodes_delimiter(old_nodes, "`")
+
+        expected_out = [
+            TextNode("This is text with a ", TextType.NORMAL),
+            TextNode("code phrase", TextType.CODE),
+            TextNode(" in the middle", TextType.NORMAL),
+        ]
+
+        err_msg = f"""Expected {expected_out},
+
+        but got {new_nodes}"""
+
+        self.assertEqual(new_nodes, expected_out, err_msg)
 
 
 def main():

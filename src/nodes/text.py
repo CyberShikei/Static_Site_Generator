@@ -58,6 +58,8 @@ class TextNode:
     # setter for text_type
     @property
     def text_type(self):
+        if self._text_type == TextType.TEXT:
+            return TextType.NORMAL
         return self._text_type
 
     @property

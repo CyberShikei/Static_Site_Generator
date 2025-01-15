@@ -1,37 +1,33 @@
 import unittest
 
-from src.convert.extract_markdown import extract_image, extract_link
+from src.convert.extract_markdown import extract_images, extract_links
 
 
 class TestExtractMarkdown(unittest.TestCase):
     def test_extract_image(self):
-        test_string = "![image](https://example.com/image.png)"
-        expected = ["https://example.com/image.png"]
+        test_input = "This is text with an ![image](https://www.boot.dev/image.png) and ![another](https://www.youtube.com/@bootdotdev)"
+        expected_output = [
+            ("This is text with an ", None),
+            ("image", "https://www.boot.dev/image.png"),
+            (" and ", None),
+            ("another", "https://www.youtube.com/@bootdotdev"),
+        ]
 
-        test_result = extract_image(test_string)
+        result = extract_images(test_input)
 
-        self.assertEqual(test_result, expected)
+    def test_extract_links(self):
+        test_input = "This is text with a [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)"
+        expected_output = [
+            ("This is text with a ", None),
+            ("to boot dev", "https://www.boot.dev"),
+            (" and ", None),
+            ("to youtube", "https://www.youtube.com/@bootdotdev"),
+        ]
 
-    def test_extract_image_no_image(self):
-        test_string = "This is a test string"
-        expected = []
+        result = extract_links(test_input)
 
-        test_result = extract_image(test_string)
-
-        self.assertEqual(test_result, expected)
-
-    def test_extract_link(self):
-        test_string = "[link](https://example.com)"
-        expected = ["https://example.com"]
-
-        test_result = extract_link(test_string)
-
-        self.assertEqual(test_result, expected)
-
-    def test_extract_link_no_link(self):
-        test_string = "This is a test string"
-        expected = []
-
-        test_result = extract_link(test_string)
-
-        self.assertEqual(test_result, expected)
+        self.assertEqual(
+            result,
+            expected_output,
+            msg=f"Expected {expected_output}, but got {result}",
+        )

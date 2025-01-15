@@ -5,6 +5,11 @@ set -e
 
 export PYTHONPATH=$(pwd)
 
+#export TESTS_DIR=$(pwd)/src/tests/*
+
+# Run all tests using unittest
+# python -m unittest discover -s src/tests/convert -p '*test*.py'
+
 # Run all tests using pytest
 pytest src/tests
 
