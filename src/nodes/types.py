@@ -33,6 +33,28 @@ class MDType(Enum):
     H6 = "######"
 
 
+class BlockType(Enum):
+    # paragraph
+    # heading
+    # code
+    # quote
+    # unordered_list
+    # ordered_list
+
+    PARAGRAPH = ""
+    H1 = "#"
+    H2 = "##"
+    H3 = "###"
+    H4 = "####"
+    H5 = "#####"
+    H6 = "######"
+
+    CODE = "```"
+    QUOTE = ">"
+    UNORDERED_LIST = "*"
+    ORDERED_LIST = "."
+
+
 def to_text_type(md_in):
     md_type = md_in
 
