@@ -68,6 +68,24 @@ def hello_world():
 
         self.assertEqual(result, expected, err_msg)
 
+    def test_quote_block(self):
+        markdown = """> This is a quote block
+> It has multiple lines
+> And some text"""
+
+        expected = [
+            ("> This is a quote block", BlockType.QUOTE),
+            ("> It has multiple lines", BlockType.QUOTE),
+            ("> And some text", BlockType.QUOTE)
+        ]
+        result = markdown_to_blocks(markdown)
+
+        err_msg = f"""Expected {expected},
+
+        but got {result}"""
+
+        self.assertEqual(result, expected, err_msg)
+
 
 if __name__ == '__main__':
     unittest.main()

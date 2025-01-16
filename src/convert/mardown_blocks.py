@@ -21,6 +21,9 @@ def markdown_to_blocks(markdown) -> List[str]:
                     line = line.lstrip()
                     blocks.append((line, line_type))
                     curr_blck_type = line_type
+                elif line_type == BlockType.PARAGRAPH:
+                    blocks.append((line, line_type))
+                    curr_blck_type = line_type
             elif line_type != BlockType.PARAGRAPH:
                 line = line.lstrip()
                 blocks.append((line, line_type))
@@ -51,7 +54,7 @@ def match_line(line: str) -> BlockType:
     else:
         return BlockType.PARAGRAPH
 
-    return BlockType.PARAGRAPH
+    # return BlockType.PARAGRAPH
 
 
 def code_block_has_spaces_before(line: str) -> bool:
