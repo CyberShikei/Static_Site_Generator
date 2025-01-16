@@ -2,10 +2,10 @@ from src.nodes.types import TextType
 
 # from src.html.node import HTMLNode
 
-from src.html.tags import str_to_tag as tag_type
+from src.nodes.html.tags import str_to_tag as tag_type
 # from src.html.tags import HTMLTag
 
-from src.html.leaf import LeafNode
+from src.nodes.html.leaf import LeafNode
 
 
 def text_to_html(text_node):
