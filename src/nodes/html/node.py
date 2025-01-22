@@ -8,8 +8,6 @@
 #               the HTML element
 #     - props: a dictionary that represents the properties of the HTML element
 
-from .tags import HTMLTag, str_to_tag
-
 # HTMLNode class
 
 
