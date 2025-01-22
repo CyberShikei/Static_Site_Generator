@@ -1,5 +1,6 @@
 from enum import Enum
 
+from src.nodes.types import BlockType
 # HTML tags
 
 
@@ -53,6 +54,8 @@ def str_to_tag(tag):
     if isinstance(tag, HTMLTag):
         return tag
 
+    if isinstance(tag, BlockType):
+        return mardown_block_tag_to_html_tag(tag)
     # if tag == "":
     #     return tag
 
@@ -64,6 +67,36 @@ def str_to_tag(tag):
         Valid tags: {valid_tags}""")
 
     return HTMLTag(upper_tag)
+
+
+def mardown_block_tag_to_html_tag(block_type):
+    """
+    Convert a BlockType string to an HTMLTag enum
+    """
+    if block_type == BlockType.H1:
+        return HTMLTag.H1
+    elif block_type == BlockType.H2:
+        return HTMLTag.H2
+    elif block_type == BlockType.H3:
+        return HTMLTag.H3
+    elif block_type == BlockType.H4:
+        return HTMLTag.H4
+    elif block_type == BlockType.H5:
+        return HTMLTag.H5
+    elif block_type == BlockType.H6:
+        return HTMLTag.H6
+    elif block_type == BlockType.PARAGRAPH:
+        return HTMLTag.P
+    elif block_type == BlockType.CODE:
+        return HTMLTag.CODE
+    elif block_type == BlockType.QUOTE:
+        return HTMLTag.BLOCKQUOTE
+    elif block_type == BlockType.UNORDERED_LIST:
+        return HTMLTag.UL
+    elif block_type == BlockType.ORDERED_LIST:
+        return HTMLTag.OL
+    else:
+        raise ValueError("Invalid block type")
 
 
 def is_in_enum(value, enum):

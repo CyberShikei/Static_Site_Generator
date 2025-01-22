@@ -24,7 +24,14 @@ class LeafNode(HTMLNode):
 
     def to_html(self):
         TAG = self.tag
-        return f'<{TAG}{self.props_to_html()}>{self.value}</{TAG}>'
+        line = f"<{TAG}"
+        if self.props == {}:
+            line += ">"
+        else:
+            line += f" {self.props_to_html()}>"
+        line += f"{self.value}</{TAG}>"
+
+        return line
 
     def __eq__(self, other):
         is_tag = self.tag == other.tag

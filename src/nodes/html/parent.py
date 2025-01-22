@@ -39,10 +39,27 @@ class ParentNode(HTMLNode):
     def to_html(self):
         self._enforce_required(self.tag, self.children)
 
+        # return a string representing the HTML tag of the node and its children. This should be a recursive method (each recursion being called on a nested child node). I iterated over all the children and called to_html on each, concatenating the results and injecting them between the opening and closing tags of the parent.
+
+        # line = f'<{self.tag}'
+        # if self.props == {}:
+        #     line += '>'
+        # else:
+        #     line += f' {self.props_to_html()}>'
+        # for child in self.children:
+        #     line += f'{child.to_html()}'
+        # line += f'</{self.tag}>'
+        #
+
         line = f'<{self.tag}'
-        line += f'{self.props_to_html()}>'
+        if self.props == {}:
+            line += '>'
+        else:
+            line += f' {self.props_to_html()}>'
+
         for child in self.children:
             line += f'{child.to_html()}'
+
         line += f'</{self.tag}>'
 
         result = line

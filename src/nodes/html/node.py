@@ -26,7 +26,7 @@ class HTMLNode():
                  children=[],
                  props={}
                  ):
-        self._tag = str_to_tag(tag)
+        self._tag = tag
         self._value = value
         self._children = children
         self._props = props
@@ -37,7 +37,10 @@ class HTMLNode():
     def props_to_html(self):
         result = ""
         for key, value in self.props.items():
-            result += f' {key}="{value}"'
+            result += f'{key}="{value}" '
+
+        # remove trailing space
+        result = result[:-1]
 
         return result
 
@@ -67,11 +70,11 @@ class HTMLNode():
     # setter and getter for tag
     @property
     def tag(self):
-        return self._tag.value
+        return self._tag
 
     @tag.setter
     def tag(self, value):
-        self._tag = str_to_tag(value)
+        self._tag = value
 
     # setter and getter for value
     @property

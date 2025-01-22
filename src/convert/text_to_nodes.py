@@ -11,6 +11,7 @@ from src.nodes.types import TextType
 BOLD_PATTERN = r"\*\*(.*?)\*\*"
 ITALIC_PATTERN = r"\*(.*?)\*"
 CODE_PATTERN = r"`(.*?)`"
+CODE_BLOCK_PATTERN = r"```(.*?)```"
 
 
 def text_to_textnodes(text: str) -> List[TextNode]:
@@ -47,4 +48,9 @@ def italic_nodes(old_nodes: List[TextNode]) -> List[TextNode]:
 
 def code_nodes(old_nodes: List[TextNode]) -> List[TextNode]:
     new_nodes = split_nodes_delimiter(old_nodes, "`")
+    return new_nodes
+
+
+def code_block_nodes(old_nodes: List[TextNode]) -> List[TextNode]:
+    new_nodes = split_nodes_delimiter(old_nodes, "```")
     return new_nodes

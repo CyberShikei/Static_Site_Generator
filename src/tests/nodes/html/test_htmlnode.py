@@ -39,7 +39,7 @@ class TestHTMLNode(unittest.TestCase):
         node = HTMLNode(TEST_TAG,
                         "This is a div",
                         props={"class": "container"})
-        t_str = ' class="container"'
+        t_str = 'class="container"'
 
         self.assertEqual(node.props_to_html(), t_str)
 
@@ -57,7 +57,7 @@ class TestHTMLNode(unittest.TestCase):
         node = HTMLNode(TEST_TAG,
                         "This is a div", props={"class": "container",
                                                 "id": "main"})
-        t_str = ' class="container" id="main"'
+        t_str = 'class="container" id="main"'
 
         self.assertEqual(node.props_to_html(), t_str)
 
