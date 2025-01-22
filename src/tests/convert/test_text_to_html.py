@@ -1,8 +1,7 @@
 import unittest
 
-from src.convert.text_to_html import text_to_html
-from src.nodes.text import TextNode
-from src.nodes.types import TextType
+from src.convert import text_to_html
+from src.nodes import TextNode, TextType
 from src.nodes.html.node import HTMLNode
 
 

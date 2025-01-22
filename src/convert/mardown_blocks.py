@@ -1,95 +1,110 @@
 from typing import List
 
-from src.nodes.types import BlockType
-
 import re
 
 
-def markdown_to_blocks(markdown) -> List[str]:
+# EXAMPLE:
+
+# INPUT:
+# # This is a heading
+#
+# This is a paragraph of text. It has some **bold** and *italic* words inside of it.
+#
+# * This is the first list item in a list block
+# * This is a list item
+# * This is another list item
+
+# OUTPUT:
+# [
+# "# This is a heading",
+# "This is a paragraph of text. It has some **bold** and *italic* words inside of it,
+# ["* This is the first list item in a list block,
+# "* This is a list item,
+# "* This is another list item,
+# ],
+# ]
+
+def markdown_to_blocks(markdown: str) -> List[str]:
     lines = markdown.split("\n")
 
-    blocks = []
+    # if code block add each line utill code block is closed,
+    # same for list blocks
+    # else if line is not empty add it to the blocks list
 
-    curr_blck_type = BlockType.PARAGRAPH
+    blocks = []
+    current_block = []
+    current_leader = ""
 
     for line in lines:
-        line_type = match_line(line)
+        stripped_line = __strip_leading_space(line)
+        leader = __get_line_leader(line)
 
-        if curr_blck_type != BlockType.CODE and curr_blck_type != BlockType.QUOTE:
-            if line_type != BlockType.CODE and line_type != BlockType.QUOTE:
-                if line_type != BlockType.PARAGRAPH:
-                    line = line.lstrip()
-                    blocks.append((line, line_type))
-                    curr_blck_type = line_type
-                elif line_type == BlockType.PARAGRAPH:
-                    blocks.append((line, line_type))
-                    curr_blck_type = line_type
-            elif line_type != BlockType.PARAGRAPH:
-                line = line.lstrip()
-                blocks.append((line, line_type))
-                curr_blck_type = line_type
-            else:
-                blocks.append((line, line_type))
-                curr_blck_type = line_type
+        if leader != "```" and current_leader == "```":
+            current_block.append(line)
+            continue
+        elif leader == "```" and current_leader == "```":
+            current_block.append(stripped_line)
+            blocks.append(current_block)
+            current_block = []
+            current_leader = ""
+            continue
         else:
-            blocks.append((line, curr_blck_type))
+            line = stripped_line
 
-        if line.endswith("```") or line.endswith(">"):
-            curr_blck_type = BlockType.PARAGRAPH
+        if leader:
+            if leader == current_leader:
+                current_block.append(line)
+            else:
+                if current_block:
+                    blocks.append(current_block)
+                current_block = [line]
+                current_leader = leader
+        else:
+            if current_block:
+                blocks.append(current_block)
+                current_block = []
+                current_leader = ""
+            if line:
+                blocks.append(line)
+
+    if current_block:
+        blocks.append(current_block)
 
     return blocks
 
 
-def match_line(line: str) -> BlockType:
+# Leaders = [
+#     "#",
+#     "##",
+#     "###",
+#     "####",
+#     "#####",
+#     "######",
+#     "-",
+#     "*",
+#     "{number}."
+#     ">",
+#     "```",
+# ]
+# LEADERS CAN HAVE SPACES BEFORE THEM
+
+
+def __get_line_leader(line: str) -> str:
+    line = __strip_leading_space(line)
     if line.startswith("#"):
-        return get_header_level(line)
-    elif line.startswith("*") or line.startswith("-"):
-        return BlockType.UNORDERED_LIST
-    elif check_ordered_list(line):
-        return BlockType.ORDERED_LIST
-    elif line.startswith("```") or code_block_has_spaces_before(line):
-        return BlockType.CODE
-    elif line.startswith(">") or quote_block_has_spaces_before(line):
-        return BlockType.QUOTE
-    else:
-        return BlockType.PARAGRAPH
-
-    # return BlockType.PARAGRAPH
-
-
-def code_block_has_spaces_before(line: str) -> bool:
-    re_pattern = r"\s*```"
-
-    return re.match(re_pattern, line) is not None
+        return "#"
+    if line.startswith("-"):
+        return "-"
+    if line.startswith("*"):
+        return "*"
+    if re.match(r"^\d+\.", line):
+        return "{number}."
+    if line.startswith(">"):
+        return ">"
+    if line.startswith("```"):
+        return "```"
+    return ""
 
 
-def quote_block_has_spaces_before(line: str) -> bool:
-    re_pattern = r"\s*>"
-
-    return re.match(re_pattern, line) is not None
-
-
-def check_open(block_type: BlockType) -> bool:
-    return block_type in [BlockType.CODE, BlockType.QUOTE]
-
-
-def get_header_level(header: str) -> int:
-    lvl = header.count("#")
-    result = BlockType.H1
-
-    if lvl >= 6:
-        result = BlockType.H6
-    elif lvl == 5:
-        result = BlockType.H5
-    elif lvl == 4:
-        result = BlockType.H4
-    elif lvl == 3:
-        result = BlockType.H3
-    elif lvl == 2:
-        result = BlockType.H2
-
-    return result
-
-
-def check_ordered_list(line: str) -> bool:
-    return re.match(r"\d+\.", line) is not None
+def __strip_leading_space(line: str) -> str:
+    return re.sub(r"^\s+", "", line)

@@ -1,8 +1,8 @@
 import unittest
 import pytest
 
-from src.nodes.html.parent import ParentNode
-from src.nodes.html.leaf import LeafNode
+from src.nodes import ParentNode
+from src.nodes import LeafNode
 
 
 class TestParentNode(unittest.TestCase):
@@ -75,6 +75,35 @@ class TestParentNode(unittest.TestCase):
             node = ParentNode(*targs)
             node.to_html()
 
+    def test_nested_parents_to_html(self):
+        # Arrange
+        tag = "h1"
+        leaf_children = [LeafNode("i", "This is a span"),
+                         ParentNode("p", [LeafNode("i", "This is a span"),
+                                          LeafNode(
+                                              "code", "This is another span")
+                                          ],
+                                    {})
+                         ]
+
+        children = [ParentNode(tag="p",
+                               children=leaf_children,
+                               props={})
+                    ]
+        props = {"id": "main"}
+
+        targs = (tag, children, props)
+
+        # Act
+        node = ParentNode(*targs)
+        result = node.to_html()
+
+        equals = f'<h1 id="main"><p>{leaf_children[0].to_html()}<p>{leaf_children[1].children[0].to_html()}{
+            leaf_children[1].children[1].to_html()}</p></p></h1>'
+
+        # Assert
+        self.assertEqual(result, equals)
+
     def test_eq(self):
         # Arrange
         tag = "h4"
@@ -114,7 +143,8 @@ class TestParentNode(unittest.TestCase):
         tag = "h1"
         children = [ParentNode(tag="p",
                                children=[],
-                               props={})]
+                               props={})
+                    ]
         props = {"id": "main"}
 
         targs = (tag, children, props)

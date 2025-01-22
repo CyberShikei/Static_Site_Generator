@@ -13,12 +13,14 @@ def text_to_html(text_node):
     Convert a TextType Enum to an HTMLTag enum
     """
     text_tag = text_node.text_type
-    html_tag = tag_type(text_tag.value)
+    html_tag = text_tag
 
     text = text_node.text
     props = {}
 
     match (text_tag):
+        case TextType.NORMAL:
+            pass
         case TextType.LINK:
             props = {"href": text_node.url}
         case TextType.IMAGE:
@@ -26,5 +28,5 @@ def text_to_html(text_node):
             props = {"src": text_node.url,
                      "alt": text_node.text}
 
-    leaf = LeafNode(html_tag, text, props)
+    leaf = LeafNode(html_tag.value, text, props)
     return leaf
