@@ -36,7 +36,7 @@ def markdown_to_blocks(markdown: str) -> List[str]:
     current_leader = ""
 
     for line in lines:
-        stripped_line = __strip_leading_space(line)
+        stripped_line = __strip_lead_tail_space(line)
         leader = __get_line_leader(line)
 
         if leader != "```" and current_leader == "```":
@@ -70,8 +70,15 @@ def markdown_to_blocks(markdown: str) -> List[str]:
     if current_block:
         blocks.append(current_block)
 
+    blocks = [__join_blocks(block) for block in blocks]
+
     return blocks
 
+
+def __join_blocks(block: List[str]) -> str:
+    if isinstance(block, str):
+        return block
+    return "\n".join(block)
 
 # Leaders = [
 #     "#",
@@ -90,7 +97,7 @@ def markdown_to_blocks(markdown: str) -> List[str]:
 
 
 def __get_line_leader(line: str) -> str:
-    line = __strip_leading_space(line)
+    line = __strip_lead_tail_space(line)
     if line.startswith("#"):
         return "#"
     if line.startswith("-"):
@@ -106,5 +113,5 @@ def __get_line_leader(line: str) -> str:
     return ""
 
 
-def __strip_leading_space(line: str) -> str:
-    return re.sub(r"^\s+", "", line)
+def __strip_lead_tail_space(line: str) -> str:
+    return re.sub(r"^\s+|\s+$", "", line)

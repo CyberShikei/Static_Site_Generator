@@ -1,10 +1,10 @@
 # convert markdown to text blocks
 
-from src.nodes import TextType
+from .types import BlockType
 
 
 class Block:
-    def __init__(self, text: str, block_type: TextType):
+    def __init__(self, text: str, block_type: BlockType):
         self.text = text
         self.block_type = block_type
 
