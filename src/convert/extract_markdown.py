@@ -2,8 +2,8 @@ import re
 
 from typing import List, Tuple
 
-IMG_PATTERN = r"!\[([^\]]+)\]\((https?://[^\)]+)\)"
-LINK_PATTERN = r"\[([^\]]+)\]\((https?://[^\)]+)\)"
+IMG_PATTERN = r"!\[([^\]]+)\]\(([^\)]+)\)"
+LINK_PATTERN = r"\[([^\]]+)\]\(([^\)]+)\)"
 
 # EXAMPLE USSAGE
 # text = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"

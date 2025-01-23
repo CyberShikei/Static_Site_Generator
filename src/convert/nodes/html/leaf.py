@@ -24,6 +24,9 @@ class LeafNode(HTMLNode):
 
     def to_html(self):
         TAG = self.tag
+        if TAG == "":
+            return self.value
+
         line = f"<{TAG}"
         if self.props == {}:
             line += ">"

@@ -61,8 +61,16 @@ def __ord_list_block_to_html_node(block: str) -> TextNode:
     for line in lines:
         new_node = TextNode(re.sub(r'^\d+\. ', '', line),
                             TextType.ORDERED_LIST)
-        html_node = text_node_to_html_node(new_node)
-        child_nodes.append(html_node)
+        sub_nodes = text_to_textnodes(new_node.text)
+
+        temp_nodes = []
+        for sub_node in sub_nodes:
+            temp_node = text_node_to_html_node(sub_node)
+            temp_nodes.append(temp_node)
+
+        list_item = ParentNode(tag="li", children=temp_nodes)
+
+        child_nodes.append(list_item)
 
     parent_node = ParentNode(tag="ol", children=child_nodes)
 
@@ -74,8 +82,16 @@ def __list_block_to_html_node(block: str) -> TextNode:
     child_nodes = []
     for line in lines:
         new_node = TextNode(re.sub(r'^\* ', '', line), TextType.UNORDERED_LIST)
-        html_node = text_node_to_html_node(new_node)
-        child_nodes.append(html_node)
+        sub_nodes = text_to_textnodes(new_node.text)
+
+        temp_nodes = []
+        for sub_node in sub_nodes:
+            temp_node = text_node_to_html_node(sub_node)
+            temp_nodes.append(temp_node)
+
+        list_item = ParentNode(tag="li", children=temp_nodes)
+
+        child_nodes.append(list_item)
 
     parent_node = ParentNode(tag="ul", children=child_nodes)
 
@@ -86,7 +102,8 @@ def __quote_block_to_html_node(block: str) -> TextNode:
     block = re.sub(r'^> ', '', block)
     text_node = TextNode(block, TextType.QUOTE)
     html_node = text_node_to_html_node(text_node)
-    return html_node
+    blockquote_node = LeafNode(tag="blockquote", value=html_node.value)
+    return blockquote_node
 
 
 def __code_block_to_text_node(block: str) -> TextNode:

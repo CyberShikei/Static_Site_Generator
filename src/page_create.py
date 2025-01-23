@@ -1,4 +1,4 @@
-from convert import markdown_to_html_node
+from convert import md_to_html_nodes
 
 import os
 
@@ -32,7 +32,7 @@ def generate_page(from_path, template_path, dest_path):
 
     title = extract_title(markdown)
 
-    html_node = markdown_to_html_node(markdown)
+    html_node = md_to_html_nodes(markdown)
 
     html_str = html_node.to_html()
 

@@ -5,7 +5,7 @@ from page_create import generate_page
 STATIC_DIR = "static/"
 PUBLIC_DIR = "public/"
 
-MD_INPUT = "static/index.md"
+MD_INPUT = "content/index.md"
 TEMPLATE_INPUT = "template.html"
 HTML_OUTPUT = "public/index.html"
 

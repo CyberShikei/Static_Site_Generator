@@ -51,7 +51,7 @@ class ParentNode(HTMLNode):
         # line += f'</{self.tag}>'
         #
 
-        line = f'<{self.tag}'
+        line = f'\n\t<{self.tag}'
         if self.props == {}:
             line += '>'
         else:
@@ -62,7 +62,7 @@ class ParentNode(HTMLNode):
 
         line += f'</{self.tag}>'
 
-        result = line
+        result = line  # + "\n"
 
         return result
 
