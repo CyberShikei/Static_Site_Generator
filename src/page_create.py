@@ -1,6 +1,7 @@
 from convert import md_to_html_nodes
 
 import os
+import shutil
 
 
 def extract_title(markdown):
@@ -47,3 +48,26 @@ def generate_page(from_path, template_path, dest_path):
     with open(dest_path, 'w') as f:
         f.write(template)
     print(f"Page generated at {dest_path}")
+
+
+# Create a generate_pages_recursive(dir_path_content, template_path, dest_dir_path) function. It should:
+#
+#     Crawl every entry in the content directory
+#     For each markdown file found, generate a new .html file using the same template.html. The generated pages should be written to the public directory in the same directory structure.
+
+
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+    # keeping the structure of the content directory in the public directory
+
+    for item in os.listdir(dir_path_content):
+        s = os.path.join(dir_path_content, item)
+        d = os.path.join(dest_dir_path, item)
+        if os.path.isdir(s):
+            generate_pages_recursive(s, template_path, d)
+        else:
+            if s.endswith('.md'):
+                generate_page(s, template_path, d.replace('.md', '.html'))
+            else:
+                print(f"Copying {s} to {d}")
+                shutil.copy(s, d)
+                print(f"Copying {s} to {d}")
