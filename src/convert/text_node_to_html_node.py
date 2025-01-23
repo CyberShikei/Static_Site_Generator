@@ -1,5 +1,3 @@
-# TODO: IMPLEMENT ME
-
 # TextNode to HTMLNode
 from src.nodes import (TextNode,
                        LeafNode,

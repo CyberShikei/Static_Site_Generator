@@ -2,10 +2,8 @@ import re
 
 from typing import List
 
-from src.nodes.types import to_text_type, to_md_type
-
-from src.nodes.text import TextNode
-from src.nodes.types import TextType
+from src.nodes import TextNode
+from src.nodes import TextType
 
 # patterns for bold, italic, and code text
 # dont remove the pattern before or after the string when split

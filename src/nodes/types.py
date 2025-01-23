@@ -15,6 +15,9 @@ class TextType(Enum):
     H4 = "h4"
     H5 = "h5"
     H6 = "h6"
+    QUOTE = "q"
+    UNORDERED_LIST = "ul"
+    ORDERED_LIST = "ol"
 
 
 class MDType(Enum):
