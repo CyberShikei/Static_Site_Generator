@@ -2,10 +2,10 @@ import re
 
 from typing import List
 
-from src.convert.split_markdown import split_nodes_image, split_nodes_link
-from src.convert.md_to_text import split_nodes_delimiter
-from src.nodes.text import TextNode
-from src.nodes.types import TextType
+from .split_markdown import split_nodes_image, split_nodes_link
+from .md_to_text import split_nodes_delimiter
+from .nodes.text import TextNode
+from .nodes.types import TextType
 
 
 BOLD_PATTERN = r"\*\*(.*?)\*\*"

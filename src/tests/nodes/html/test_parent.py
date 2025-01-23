@@ -1,8 +1,8 @@
 import unittest
 import pytest
 
-from src.nodes import ParentNode
-from src.nodes import LeafNode
+from src.convert.nodes import ParentNode
+from src.convert.nodes import LeafNode
 
 
 class TestParentNode(unittest.TestCase):

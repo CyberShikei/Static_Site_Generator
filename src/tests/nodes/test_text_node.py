@@ -1,6 +1,6 @@
 import pytest
 
-from src.nodes import TextNode, TextType
+from src.convert.nodes import TextNode, TextType
 
 
 class TestTextNode():

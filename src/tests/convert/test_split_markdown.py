@@ -1,8 +1,8 @@
 import unittest
 
 from src.convert.split_markdown import split_nodes_link, split_nodes_image
-from src.nodes.text import TextNode
-from src.nodes.types import TextType
+from src.convert.nodes.text import TextNode
+from src.convert.nodes.types import TextType
 
 
 class TestSplitMarkdown(unittest.TestCase):

@@ -1,8 +1,8 @@
 import unittest
 
 from src.convert.md_to_text import split_nodes_delimiter
-from src.nodes.types import TextType
-from src.nodes.text import TextNode
+from src.convert.nodes.types import TextType
+from src.convert.nodes.text import TextNode
 
 
 class TestMdToText(unittest.TestCase):

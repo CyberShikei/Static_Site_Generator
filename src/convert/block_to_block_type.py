@@ -1,6 +1,6 @@
 from typing import List
 
-from src.nodes import BlockType
+from .nodes import BlockType
 
 import re
 

@@ -1,7 +1,7 @@
 import unittest
 
 from src.convert import block_to_block_type
-from src.nodes import BlockType
+from src.convert.nodes import BlockType
 
 CASES = [
     ("# Heading", BlockType.H1),

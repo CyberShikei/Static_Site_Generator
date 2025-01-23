@@ -1,8 +1,8 @@
 # TextNode to HTMLNode
-from src.nodes import (TextNode,
-                       LeafNode,
-                       TextType
-                       )
+from .nodes import (TextNode,
+                    LeafNode,
+                    TextType
+                    )
 
 
 def text_node_to_html_node(text_node: TextNode) -> LeafNode:

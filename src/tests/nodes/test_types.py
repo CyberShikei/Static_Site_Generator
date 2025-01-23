@@ -1,6 +1,6 @@
 import unittest
 
-from src.nodes.types import TextType, MDType, to_text_type, to_md_type
+from src.convert.nodes.types import TextType, MDType, to_text_type, to_md_type
 
 TEST_CASES = {
     "text": {TextType.NORMAL: "",

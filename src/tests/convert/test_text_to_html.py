@@ -1,7 +1,7 @@
 import unittest
 
 from src.convert import text_node_to_html_node as text_to_html
-from src.nodes import TextNode, TextType
+from src.convert.nodes import TextNode, TextType
 
 
 class TestTextToHtml(unittest.TestCase):

@@ -1,8 +1,7 @@
 import unittest
 
 from src.convert.text_to_nodes import text_to_textnodes
-from src.nodes.text import TextNode
-from src.nodes.types import TextType
+from src.convert.nodes import TextNode, TextType
 
 
 class TestTextToNodes(unittest.TestCase):
