@@ -38,8 +38,15 @@ def md_to_html_nodes(markdown) -> ParentNode:
                 html_nodes.append(html_node)
             html_node = ParentNode(tag="p", children=html_nodes)
         elif __is_heading(block_type):
-            text_node = __get_heading_text_node(block)
-            html_node = text_node_to_html_node(text_node)
+            head = __get_heading_text_node(block)
+            sub_block = __strip_heading(block)
+            text_nodes = text_to_textnodes(sub_block)
+            html_nodes = []
+            for text_node in text_nodes:
+                html_node = text_node_to_html_node(text_node)
+                html_nodes.append(html_node)
+            html_node = ParentNode(tag=head.text_type.value,
+                                   children=html_nodes)
         elif block_type == BlockType.CODE:
             text_node = __code_block_to_text_node(block)
             html_node = text_node_to_html_node(text_node)

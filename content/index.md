@@ -1,32 +1,6 @@
-# Tolkien Fan Club
+# My Portfolio
 
-**I like Tolkien**. Read my [first post here](/majesty)
+Welcome to my portfolio! I am a software engineer with a passion for creating and building things. I have experience in web development, mobile development, and machine learning. I am always looking for new opportunities to learn and grow.
 
-> All that is gold does not glitter
-
-## Reasons I like Tolkien
-
-* You can spend years studying the legendarium and still not understand its depths
-* It can be enjoyed by children and adults alike
-* Disney *didn't ruin it*
-* It created an entirely new genre of fantasy
-
-## My favorite characters (in order)
-
-1. Gandalf
-2. Bilbo
-3. Sam
-4. Glorfindel
-5. Galadriel
-6. Elrond
-7. Thorin
-8. Sauron
-9. Aragorn
-
-Here's what `elflang` looks like (the perfect coding language):
-
-```
-func main(){
-    fmt.Println("Hello, World!")
-}
-```
+Here is a link to some of the projects I have worked on:
+[Projects](/github)
