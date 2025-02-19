@@ -8,7 +8,26 @@
     <link href="/index.css" rel="stylesheet">
 </head>
 
-<body>
+<body background-image="/images/bg.png">
+    
+     <div class="topnav">
+        <a class="title" href="/">| cyber.shikei |</a>
+        <button type="button" class="collapsible">
+            <img src="/images/menu.png">.menu
+        </button>
+        <div class="content">
+             <a href="/contact">.contact</a>
+             <a href="/music">.music</a>
+             <a href="/github">.projects</a>
+             <a href="/about">.about</a>
+             <a class="active" href="/">.home</a>
+        </div>
+    </div> 
+    <div class="leftnav">
+        <div class="icon-grid" id="icon-container"></div>
+    </div>
+    <script src="/icons.js"></script> 
+    <script src="/colapsible.js"></script>
     <article>
         {{ Content }}
     </article>

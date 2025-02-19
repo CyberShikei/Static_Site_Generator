@@ -52,6 +52,9 @@ class TextNode:
     @property
     def text(self):
         return self._text
+    
+    def set_text(self, text):
+        self._text = text
 
     @property
     def url(self):

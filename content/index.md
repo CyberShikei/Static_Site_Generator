@@ -1,6 +1,11 @@
-# My Portfolio
+# Jacobus Petrus Ferreira
 
-Welcome to my portfolio! I am a software engineer with a passion for creating and building things. I have experience in web development, mobile development, and machine learning. I am always looking for new opportunities to learn and grow.
+## Welcome to my portfolio!
 
-Here is a link to some of the projects I have worked on:
-[Projects](/github)
+A place where I showcase my work and skills.
+Below is navigational links for you to explore my projects and learn more about me.
+
+- [.projects](/github)
+- [.music](/music)
+- [.about](/about)
+- [.contact](/contact)

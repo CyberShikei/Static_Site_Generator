@@ -93,7 +93,8 @@ def __list_block_to_html_node(block: str) -> TextNode:
 
         temp_nodes = []
         for sub_node in sub_nodes:
-            temp_node = text_node_to_html_node(sub_node)
+            remove_mark = __remove_list_marker(sub_node)
+            temp_node = text_node_to_html_node(remove_mark)
             temp_nodes.append(temp_node)
 
         list_item = ParentNode(tag="li", children=temp_nodes)
@@ -104,6 +105,9 @@ def __list_block_to_html_node(block: str) -> TextNode:
 
     return parent_node
 
+def __remove_list_marker(text: TextNode) -> TextNode:
+    text.set_text(re.sub(r'^\- ', '', text.text))
+    return text
 
 def __quote_block_to_html_node(block: str) -> TextNode:
     block = re.sub(r'^> ', '', block)
